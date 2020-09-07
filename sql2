@@ -1,0 +1,15 @@
+create table student(usn integer primary key,name varchar(10),number integer,branch varchar(20));
+insert into student values(10,'AAA',11111,'CS');
+insert into student values(11,'BBB',22222,'CS');
+insert into student values(12,'CCC',33333,'IS'); 
+insert into student values(13,'DDD',44444,'CS');
+insert into student values(14,'EEE',55555,'IS');
+
+SQL Query:
+select *from student where branch = 'CS';              
+
+OUTPUT:
+usn	name	number	branch
+10	AAA	11111	CS
+11	BBB	22222	CS
+13	DDD	44444	CS           
