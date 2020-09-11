@@ -12,11 +12,11 @@ select * from BOOK
 
 OUTPUT:
 Book_id	  Title	  Publisher_Name   Pub_Year
-1	        DBMS	  AAA	             2020
-2	        ADP	    BBB	             2020
-3	        ATC	    CCC	             2020
-4	        ME	    DDD	             2020
-5	        ME	    EEE	             2020 
+1	  DBMS	  AAA	           2020
+2	  ADP	  BBB	           2020
+3	  ATC	  CCC	           2020
+4	  ME	  DDD	           2020
+5	  ME	  EEE	           2020 
 
 
 SQL Query:
@@ -37,5 +37,4 @@ select * from BOOK where Book_id=04
 
 OUTPUT:
 Book_id	  Title	  Publisher_NamE    Pub_Year
-4	        ME	    DDD	              2020
-
+4	  ME	  DDD	            2020
