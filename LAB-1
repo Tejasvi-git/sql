@@ -1,40 +1,6 @@
-create table BOOK(Book_id integer primary key,Title varchar(20),Publisher_Name varchar(20),Pub_Year varchar(20));
-insert into BOOK values(01,'DBMS','AAA','2020');
-insert into BOOK values(02,'ADP','BBB','2020');
-insert into BOOK values(03,'ATC','CCC','2020');
-insert into BOOK values(04,'ME','DDD','2020');
-insert into BOOK values(05,'ME','EEE','2020');  
-create table Book_copies(Book_id integer,Branch_id integer,No_of_Copies integer, primary key(Book_id,Branch_id));
-
-
-SQL Query:
-  select * from BOOK
-
-OUTPUT:
-Book_id	  Title	  Publisher_Name   Pub_Year
-1	  DBMS	  AAA	           2020
-2	  ADP	  BBB	           2020
-3	  ATC	  CCC	           2020
-4	  ME	  DDD	           2020
-5	  ME	  EEE	           2020 
-
-
-SQL Query:
-  select Book_id from BOOK
-
-
-OUTPUT:
-Book_id
-1
-2
-3
-4
-
-
-SQL Query:
-  select * from BOOK where Book_id=04
-
-
-OUTPUT:
-Book_id	  Title	  Publisher_NamE    Pub_Year
-4	  ME	  DDD	            2020
+create table PUBLISHER(Name varchar(10) primary key,Address varchar(40),Phone integer);
+create table BOOK(Book_id integer primary key,Title varchar(20),Publisher_Name varchar(20) foreign key references PUBLISHER(Name),Pub_Year integer);
+create table BOOK_AUTHORS(Book_id integer primary key,Author_Name varchar(20),foreign key(Book_id) references BOOK(Book_id));
+create table LIBRARY_BRANCH(Branch_id integer primary key,Branch_Name varchar(20),Address varchar(20));
+create table BOOK_COPIES(Book_id integer,Branch_id integer,No-of_Copies integer,primary key(Book_id,Branch_id),foreign key(Book_id) references BOOK(Book_id),foreign key(Branch_id) reference LIBRARY_BRANCH(Branch_id)); 
+create table BOOK_LENDING(Book_id integer,Branch_id integer,Card_No integer,Date_Out varchar(10),Due_date varchar(10),primary key(Book_id,Branch_id,Card_No),foreign key(Book_id) references BOOK(Book_id),foreign key(Branch_id) reference LIBRARY_BRANCH(Branch_id));
