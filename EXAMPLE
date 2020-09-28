@@ -1,0 +1,35 @@
+create table STUDENT(ssn integer,name varchar(10),major varchar(10),Bdate date,primary key(ssn));
+create table COURSE(course_id integer,cname varchar(20),Dept varchar(20),primary key(course_id));
+create table TEXT_BOOK(book_ISBN integer,book_title varchar(20),publisher varchar(20),author varchar(20),primary key(book_ISBN));
+create table BOOK_ADOPTION(course_id integer, quarter integer, book_ISBN integer,primary key(quarter),foreign key(course_id) references COURSE(course_id),foreign key(book_ISBN) references TEXT_BOOK(book_ISBN));
+create table ENROLL(ssn integer,course_id integer,quarter integer,grade varchar(5),primary key(ssn,course_id,quarter),foreign key(ssn) references STUDENT(ssn),foreign key(course_id) references COURSE(course_id),foreign key(quarter) references BOOK_ADOPTION(quarter));            
+
+insert into STUDENT values(01,'aaa','cs','2002-04-25');
+insert into STUDENT values(02,'bbb','is','2003-06-22');
+insert into STUDENT values(03,'ccc','ec','2000-05-07');
+insert into STUDENT values(04,'ddd','cs','2001-11-19');
+insert into STUDENT values(05,'eee','is','2000-06-13');
+
+insert into COURSE values(10,'DBMS','ec');
+insert into COURSE values(20,'ME','cs');
+insert into COURSE values(30,'ADP','is');
+insert into COURSE values(40,'CNS','ec');
+insert into COURSE values(50,'ATC','cs');
+
+insert into TEXT_BOOK values(101,'dbms by xxx','aa','xxx');
+insert into TEXT_BOOK values(102,'me by yyy','bb','yyy');
+insert into TEXT_BOOK values(103,'adp by zzz','cc','zzz');
+insert into TEXT_BOOK values(104,'cns by www','dd','www');
+insert into TEXT_BOOK values(105,'atc by vvv','ee','vvv');
+
+insert into BOOK_ADOPTION values(20,5,104);
+insert into BOOK_ADOPTION values(40,3,102);
+insert into BOOK_ADOPTION values(10,2,102);
+insert into BOOK_ADOPTION values(30,1,104);
+insert into BOOK_ADOPTION values(40,4,105);
+
+insert into ENROLL values(03,20,2,'A');
+insert into ENROLL values(01,20,4,'B');
+insert into ENROLL values(04,30,3,'B');
+insert into ENROLL values(05,50,5,'A');
+insert into ENROLL values(03,40,1,'C');
