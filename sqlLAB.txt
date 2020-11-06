@@ -81,3 +81,16 @@ Book_id	Author_Name
 30	Samual
 40	Padma
 50	Guru
+
+Query:
+
+create view v1 as select Title,B.Book_id,sum(No_of_Copies) from BOOK B,BOOK_COPIES BC where B.Book_id=BC.Book_id group by B.Book_id,Title;
+select * from v1;
+
+Output:
+
+Title  Book_id  sum(No_of_Copies)
+DBMS	 10	      25
+SE	   20	      15
+FLAT	 30	      30
+BDA	   40	      7
