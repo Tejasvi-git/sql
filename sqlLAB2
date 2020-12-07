@@ -53,6 +53,7 @@ Output:
 
 Salesman_id	Name
 10		akash
+30		raj
 
 Query 3:
 
@@ -129,5 +130,6 @@ Ord_No	Purchase_Amt	Ord_Date	Customer_id	Salesman_id
 552	2500		2020-02-05	2000		20
 553	500		2020-03-03	3000		40
 554	1500		2020-04-02	4000		30
+556	3500		2020-06-03	2000		30
 
 
