@@ -19,6 +19,7 @@ insert into ORDERS values(552,2500,"2020-02-05",2000,20);
 insert into ORDERS values(553,500,"2020-03-03",3000,40);
 insert into ORDERS values(554,1500,"2020-04-02",4000,30);
 insert into ORDERS values(555,2000,"2020-06-03",2000,10);
+insert into ORDERS values(556,3500,"2020-06-03",2000,30);
 
 Query 1:
 
@@ -67,7 +68,7 @@ where Salesman_id in(select Salesman_id
                      from SALESMAN S 
                      where not exists(select Salesman_id 
                                       from CUSTOMER C 
-                                      where S.City=C.City and S.Salesman_id=C.Salesman_id))
+                                      where S.City=C.City and S.Salesman_id=C.Salesman_id));
 
 Output:
 
@@ -80,15 +81,22 @@ Salesman_id	Name	City		Commission
 
 Query 4:
 
-create view V1 as
-select Salesman_id
+create view best_salesman as
+select Salesman_id,Ord_Date,Purchase_Amt
 from ORDERS
-group by Ord_Date
-having max(Ord_Date)
+where Purchase_Amt in(select max(Purchase_Amt)
+		      from ORDERS
+                      group by Ord_Date);
+select * from best_salesman;
 
 Output:
 
-There are no results to be displayed.
+Salesman_id	Ord_Date	Purchase_Amt
+10		2020-01-04	5000
+20		2020-02-05	2500
+40		2020-03-03	500
+30		2020-04-02	1500
+30		2020-06-03	3500
 
 Query 5:
 
