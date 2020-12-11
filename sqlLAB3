@@ -1,0 +1,55 @@
+create table ACTOR(Act_id integer primary key,Act_Name varchar(20),Act_Gender varchar(1));
+create table DIRECTOR(Dir_id integer primary key,Dir_Name varchar(20),Dir_Phone varchar(10));
+create table MOVIES(Mov_id integer primary key,Mov_Title varchar(20),Mov_Year integer,Mov_Lang varchar(10),Dir_id integer,foreign key(Dir_id) references DIRECTOR(Dir_id) on delete cascade);
+create table MOVIE_CAST(Act_id integer,Mov_id integer,Role varchar(10),primary key(Act_id,Mov_id),foreign key(Act_id) references ACTOR(Act_id) on delete cascade,foreign key(Mov_id) references MOVIES(Mov_id) on delete cascade);
+create table RATING(Mov_id integer primary key,Rev_Stars integer,foreign key(Mov_id) references MOVIES(Mov_id) on delete cascade);
+insert into ACTOR values(100,'Deepika Padukone','F');
+insert into ACTOR values(101,'Yash','M');
+insert into ACTOR values(102,'Anne Hathaway','F');
+insert into ACTOR values(103,'Tom Hanks','M');                                                                                        
+insert into ACTOR values(104,'Pruthvi','M');
+insert into DIRECTOR values(200,'Soori','9925174452');
+insert into DIRECTOR values(201,'Shoojit Sircar','9028627331');
+insert into DIRECTOR values(202,'Vismaya Vinayak','7522855600');
+insert into DIRECTOR values(203,'Hitchcock','9988524431');
+insert into DIRECTOR values(204,'Steven Spielberg','7233855098');
+insert into MOVIES values(1000,'Lucky',2012,'Kannada',200);
+insert into MOVIES values(1001,'The Terminal',2004,'English',204);
+insert into MOVIES values(1002,'Piku',2015,'Hindi',201);
+insert into MOVIES values(1003,'2 ekre',2020,'Tulu',202);
+insert into MOVIES values(1004,'The Princess Diaries',2001,'English',203);
+insert into MOVIE_CAST values(104,1003,'Hero');
+insert into MOVIE_CAST values(102,1004,'Heroine');
+insert into MOVIE_CAST values(104,1000,'Hero');
+insert into MOVIE_CAST values(103,1001,'Hero');
+insert into MOVIE_CAST values(100,1002,'Heroine');
+insert into RATING values(1000,8);
+insert into RATING values(1001,9);
+insert into RATING values(1002,8);
+insert into RATING values(1003,8);
+insert into RATING values(1004,7);
+
+Query 1:
+
+select M.Mov_Title
+from MOVIES M,DIRECTOR D
+where M.Dir_id=D.Dir_id and D.Dir_Name="Hitchcock";
+
+Output:
+
+Mov_Title
+The Princess Diaries
+
+Query 2:
+
+select Mov_Title
+from MOVIES M,MOVIE_CAST MC
+where M.Mov_id=MC.Mov_id and Act_id in(select Act_id
+				       from MOVIE_CAST
+				       group by Act_id having count(*)>1);
+
+Output:
+
+Mov_Title
+Lucky
+2 ekre
