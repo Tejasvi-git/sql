@@ -18,10 +18,10 @@ insert into MOVIES values(1001,'The Terminal',2004,'English',204);
 insert into MOVIES values(1002,'Piku',2015,'Hindi',201);
 insert into MOVIES values(1003,'2 ekre',2020,'Tulu',202);
 insert into MOVIES values(1004,'The Princess Diaries',2001,'English',203);
-insert into MOVIE_CAST values(104,1003,'Hero');
-insert into MOVIE_CAST values(102,1004,'Heroine');
 insert into MOVIE_CAST values(104,1000,'Hero');
-insert into MOVIE_CAST values(103,1001,'Hero');
+insert into MOVIE_CAST values(101,1000,'Heroine');
+insert into MOVIE_CAST values(104,1003,'Hero');
+insert into MOVIE_CAST values(101,1003,'Hero');
 insert into MOVIE_CAST values(100,1002,'Heroine');
 insert into RATING values(1000,8);
 insert into RATING values(1001,9);
@@ -42,7 +42,7 @@ The Princess Diaries
 
 Query 2:
 
-select Mov_Title
+select  distinct Mov_Title
 from MOVIES M,MOVIE_CAST MC
 where M.Mov_id=MC.Mov_id and Act_id in(select Act_id
 				       from MOVIE_CAST
@@ -53,3 +53,48 @@ Output:
 Mov_Title
 Lucky
 2 ekre
+
+Query 3:
+
+select Act_id
+from MOVIES M join MOVIE_CAST MC
+on M.Mov_id=MC.Mov_id
+where Mov_Year<2000
+intersection
+select Mov_id
+from MOVIES M
+where Mov_Year>2015;
+
+Output:
+
+
+
+Query 4:
+
+select Mov_Title,Rev_Stars
+from MOVIES M,RATING R
+where M.Mov_id=R.Mov_id and Rev_Stars in(select max(Rev_Stars) from RATING)
+order by Mov_Title;
+
+Output:
+
+Mov_Title	Rev_Stars
+The Terminal	9
+
+Query 5:
+
+update RATING
+set Rev_Stars=5
+where Mov_id in(select Mov_id
+		from MOVIES M,DIRECTOR D
+		where M.Dir_id=D.Dir_id and Dir_Name="Steven Spielberg");
+select * from RATING;
+
+Output:
+
+Mov_id	Rev_Stars
+1000	8
+1001	5
+1002	8
+1003	8
+1004	7
