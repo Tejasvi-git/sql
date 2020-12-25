@@ -1,0 +1,35 @@
+create table STUDENT(USN varchar(10) primary key,SName varchar(20),Address varchar(40),Phone varchar(10),Gender varchar(1));
+create table SEMSEC(SSID varchar(10) primary key,Sem varchar(10),Sec varchar(1));
+create table CLASS(USN varchar(10) primary key,SSID varchar(10),integer,foreign key(USN) references STUDENT(USN) on delete cascade);
+create table COURSE(Subcode varchar(10) primary key,Title varchar(20),Sem varchar(10),Credits integer);
+create table IAMARKS(USN varchar(10),Subcode varchar(10),SSID varchar(10),Test1 integer,Test2 integer,Test3 integer,FinalIA integer,primary key(USN,Subcode,SSID),foreign key(USN) references STUDENT(USN) on delete cascade,foreign key(Subcode) references COURSE(Subcode) on delete cascade,foreign key(SSID) references SEMSEC(SSID) on delete cascade);
+insert into STUDENT values("1BI15CS101","Justin","xxx","9326442267","M");
+insert into STUDENT values("1BI15CS102","Ariana","yyy","9982536424","F");
+insert into STUDENT values("1BI15CS103","Lauv","zzz","9873635556","M");
+insert into STUDENT values("1BI15CS104","Selena","www","7277445823","F");
+insert into SEMSEC values("a10","first","A");
+insert into SEMSEC values("a11","second","B");
+insert into SEMSEC values("a12","third","D");
+insert into SEMSEC values("a13","fourth","C");
+insert into CLASS values("1BI15CS101","a10");
+insert into CLASS values("1BI15CS102","a10");
+insert into CLASS values("1BI15CS103","a13");
+insert into CLASS values("1BI15CS104","a12");
+insert into COURSE values("11CS21","MAT","third",1);
+insert into COURSE values("11CS22","DBMS","fourth",2);
+insert into COURSE values("11CS23","CNS","first",3);
+insert into COURSE values("11CS24","UP","third",3);
+insert into IAMARKS values("1BI15CS101","11CS21","a10",20,20,19,20);
+insert into IAMARKS values("1BI15CS102","11CS22","a11",17,17,16,17);
+insert into IAMARKS values("1BI15CS103","11CS23","a12",16,16,15,16);
+insert into IAMARKS values("1BI15CS104","11CS24","a13",12,12,11,12);
+
+Query 1:
+
+select *
+from STUDENT S
+where USN in(select USN
+	     from CLASS C
+	     where SSID in(select SSID
+			   from SEMSEC
+			   where Sem="fourth" and Sec="C"));
